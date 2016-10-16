@@ -1,6 +1,9 @@
-var c=document.getElementById("simulationCanvas");
+var c = document.getElementById("simulationCanvas");
 var ctx = c.getContext("2d");
 var rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+var pc = 0;
+var cr = 0;
+var ac = 0;
 $(function() {
 
     //Initialise
@@ -68,6 +71,9 @@ $(function() {
     function reset_click(){
         console.log("Reset clicked");
         rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+        pc = 0;
+        cr = 0;
+        ac = 0;
         initialise();
     }
 
