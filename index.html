@@ -63,44 +63,49 @@
                     <li>
                         <a class="page-scroll" href="#manual">User Manual</a>
                     </li>
-
+                    <li>
+                        <a class="page-scroll" href="#simulation">Simulation</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
-
-    <header>
-        <div class="container">
+    <header id="description">
+    <div class="container">
             <div class="row">
                 <div class="col-sm-7">
                     <div class="header-content">
                         <div class="header-content-inner">
-                            <h1>New Age is an app landing page that will help you beautifully showcase your new mobile app, or anything else!</h1>
-                            <a href="#download" class="btn btn-outline btn-xl page-scroll">Start Now for Free!</a>
+                            <h1>Logic CPU system</h1>
+                            <h3>Features include:</h3>
+                            <ul>
+                              <li>4 word ROM size - 6 bits each</li>
+                              <li>Powered by Mini-USB</li>
+                              <li>Comes in a stylish box</li>
+                              <li>4-bit Accumulator</li>
+                              <li>Manual pulse generator with de-bounce circuit</li>
+                            </ul>
+                            <h3>Opcodes</h3>
+                            <ol start="0">
+                              <li><strong>LOAD</strong> - Load a value into accululator <code>acc:=v</code></li>
+                              <li><strong>ADD</strong> - Add constant into accululator <code>acc:=acc+v</code></li>
+                              <li><strong>LSL</strong> - Logically shift accumulator bits left by 1 <code>acc:=&lt;&lt;acc</code></li>
+                              <li><strong>JMP</strong> - Sets PC to value in ROM <code>PC:=ROM[v]</code></li>
+
+                            </ol>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="device-container">
-                        <div class="device-mockup iphone6_plus portrait white">
-                            <div class="device">
-                                <div class="screen">
-                                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
-                                    <img src="img/demo-screen-1.jpg" class="img-responsive" alt="">
-                                </div>
-                                <div class="button">
-                                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
-                                </div>
-                            </div>
-                        </div>
+                        <img src="img/project_img1.png" class="img-responsive" alt="">
                     </div>
                 </div>
             </div>
         </div>
-    </header>
-
+      </header>
     <section id="design" class="download bg-primary text-center">
         <div class="container">
             <div class="row">
@@ -115,7 +120,6 @@
             </div>
         </div>
     </section>
-
     <section id="budget" class="features">
         <div class="container">
             <div class="row">
@@ -160,28 +164,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-present text-primary"></i>
-                                    <h3>Free to Use</h3>
-                                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="feature-item">
-                                    <i class="icon-lock-open text-primary"></i>
-                                    <h3>Open Source</h3>
-                                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
     </section>
-
-    <section class="cta">
+    <section id="manual" class="download bg-primary text-center">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                  <h2 class="section-heading">Discover what all the buzz is about!</h2>
+                  <p>Our app is available on any mobile device! Download now to get started!</p>
+                  <div class="badges">
+                      <a class="badge-link" href="#"><img src="img/google-play-badge.svg" alt=""></a>
+                      <a class="badge-link" href="#"><img src="img/app-store-badge.svg" alt=""></a>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+    <section id="simulation" class="cta">
         <div class="cta-content">
             <div class="container">
                 <h2>Stop waiting.<br>Start building.</h2>
@@ -190,21 +191,9 @@
         </div>
         <div class="overlay"></div>
     </section>
-
     <footer>
         <div class="container">
-            <p>&copy; 2016 Start Bootstrap. All Rights Reserved.</p>
-            <ul class="list-inline">
-                <li>
-                    <a href="#">Privacy</a>
-                </li>
-                <li>
-                    <a href="#">Terms</a>
-                </li>
-                <li>
-                    <a href="#">FAQ</a>
-                </li>
-            </ul>
+            <p>&copy; 2016 All Rights Reserved.</p>
         </div>
     </footer>
 
