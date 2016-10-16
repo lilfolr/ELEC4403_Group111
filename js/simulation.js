@@ -1,15 +1,15 @@
 var c = document.getElementById("simulationCanvas");
+var log = document.getElementById("log");
 var ctx = c.getContext("2d");
 var rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
 var pc = 0;
 var cr = 0;
+var ar = 0;
 var ac = 0;
-var display = 0;
 $(function() {
 
     //Initialise
-    initialise();
-
+    reset_click();
     //Click Events
     c.addEventListener("click", clicked);
 
@@ -19,6 +19,19 @@ $(function() {
       ctx.clearRect(0, 0, c.width, c.height);
       //CPU
       ctx.rect(60, 50, 576, 320);
+
+      ctx.fillText("PC",130, 85);
+      ctx.rect(100, 90, 100, 100);
+
+      ctx.fillText("CR",130, 215);
+      ctx.rect(100, 220, 100, 100);
+
+      ctx.fillText("AR",430,85);
+      ctx.rect(400, 90, 100, 100);
+
+      ctx.fillText("Accu",430,215);
+      ctx.rect(400, 220, 100, 100);
+
       //Clock
       ctx.fillText("Clock",650, 400);
       ctx.rect(650, 410, 60, 70);
@@ -34,15 +47,47 @@ $(function() {
         ctx.fillRect(60+(i*24), 410, 24, 30);
         ctx.rect(60+(i*24), 410, 24, 30);
         ctx.fillStyle="#000";
-        ctx.fillText(i+"",60+(i*24), 460);
-
+        x=i>9?"":"0";
+        ctx.fillText(x+i+"",60+(i*24), 460);
       }
-
       //7-seg
-      ctx.font="150px Lucida Console";
-      ctx.fillText(display+"",660, 160);
       ctx.rect(650, 50, 100, 120);
-      ctx.stroke();
+    }
+
+    function redraw(){
+        ctx.fillStyle="#000";
+        ctx.clearRect(100, 90, 100, 100);
+        ctx.clearRect(100, 220, 100, 100);
+        ctx.clearRect(400, 90, 100, 100);
+        ctx.clearRect(400, 220, 100, 100);
+        ctx.clearRect(650, 50, 100, 120);
+        ctx.rect(100, 90, 100, 100);
+        ctx.rect(100, 220, 100, 100);
+        ctx.rect(400, 90, 100, 100);
+        ctx.rect(400, 220, 100, 100);
+        ctx.rect(650, 50, 100, 120);
+        
+        ctx.font="150px Lucida Console";
+        ac_hex = ac;
+        ar_hex = ar;
+        if (ac>9){
+            ac_hex = String.fromCharCode(65+ac-10);
+        }
+        if (ar>9){
+            ar_hex = String.fromCharCode(65+ar-10);
+        }
+        //7seg
+        ctx.fillText(ac_hex+"",655, 160);
+        ctx.font="100px Lucida Console";
+        //ACCU
+        ctx.fillText(ac_hex+"",425,300);
+        //CR
+        ctx.fillText(cr+"",125,300);
+        //AR
+        ctx.fillText(ar_hex+"",425,170);
+        //PC
+        ctx.fillText(pc+"",125,170);
+        ctx.stroke();
     }
 
     function clicked(event){
@@ -70,13 +115,15 @@ $(function() {
     }
 
     function reset_click(){
-        console.log("Reset clicked");
-        rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+        console.log("Reset");
+        rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
         pc = 0;
         cr = 0;
         ac = 0;
-        display = 0;
+        ar = 0;
         initialise();
+        redraw();
+        printROM();
     }
 
     function rom_clicked(r){
@@ -89,10 +136,69 @@ $(function() {
         }
         ctx.fillRect(60+(r*24), 410, 24, 30);
         ctx.rect(60+(r*24), 410, 24, 30);
+        printROM();
+    }
+
+    function printROM(){
+        txt="";
+        
+        for (var i=0; i<4; i++){
+            rom_offset=i*6;
+            code = rom[rom_offset+4]*2+rom[rom_offset+5];
+            data = rom[rom_offset]*8+rom[rom_offset+1]*4+rom[rom_offset+2]*2+rom[rom_offset+3];
+            switch (code) {
+                case 0:
+                    txt += "LOAD "+data;
+                    break;
+                case 1:
+                    txt += "ADD "+data;
+                    break;            
+                case 2:
+                    txt += "LSL";
+                    break;            
+                case 3:
+                    txt += "JMP "+data;
+                    break;
+            }
+            txt+="\n"
+        }
+
+        $("#log").text(txt);
+
     }
 
     function clock_clicked(){
-        console.log("Clock clicked");
-
+        //01 = Load
+        //02 = Add
+        //03 = lsl
+        //04 = jmp
+        
+        //0-3 = data
+        //4-5 = code
+        var rom_offset = pc*6;
+        cr = rom[rom_offset+4]*2+rom[rom_offset+5];
+        ar = rom[rom_offset]*8+rom[rom_offset+1]*4+rom[rom_offset+2]*2+rom[rom_offset+3];
+        cr = cr%4;
+        ar = ar%16;
+        console.log("Code "+cr+" Data "+ar);
+        switch (cr) {
+            case 0:
+                ac = ar;
+                break;
+            case 1:
+                ac = ac + ar
+                break;            
+            case 2:
+                ac = ac << 1;
+                break;            
+            case 3:
+                pc = ar-1;
+                break;
+        }
+        ar = ar%16;
+        ac = ac%16;
+        pc += 1;
+        pc = pc%4;
+        redraw();
     }
 });
