@@ -1,6 +1,7 @@
 var c=document.getElementById("simulationCanvas");
 var ctx = c.getContext("2d");
 var rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+var display = 0;
 $(function() {
 
     //Initialise
@@ -31,12 +32,12 @@ $(function() {
         ctx.rect(60+(i*24), 410, 24, 30);
         ctx.fillStyle="#000";
         ctx.fillText(i+"",60+(i*24), 460);
-        
+
       }
-      
+
       //7-seg
       ctx.font="150px Lucida Console";
-      ctx.fillText("0",660, 160);
+      ctx.fillText(display+"",660, 160);
       ctx.rect(650, 50, 100, 120);
       ctx.stroke();
     }
@@ -68,13 +69,14 @@ $(function() {
     function reset_click(){
         console.log("Reset clicked");
         rom = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
+        display = 0;
         initialise();
     }
 
     function rom_clicked(r){
         console.log("ROM "+r+" clicked");
-        rom[r] = 1-rom[r]
-        if (rom[r]==0){
+        rom[r] = 1-rom[r];
+        if (rom[r]===0){
             ctx.fillStyle="#FF0000"; //Red
         }else{
             ctx.fillStyle="#17ff00"; //Green
