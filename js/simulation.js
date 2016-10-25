@@ -163,7 +163,7 @@ $(function() {
             txt+="\n"
         }
 
-        $("#log").text(txt);
+        $("#log").val(txt);
 
     }
 
