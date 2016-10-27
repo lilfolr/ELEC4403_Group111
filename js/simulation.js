@@ -66,7 +66,7 @@ $(function() {
         ctx.rect(400, 90, 100, 100);
         ctx.rect(400, 220, 100, 100);
         ctx.rect(650, 50, 100, 120);
-        
+
         ctx.font="150px Lucida Console";
         ac_hex = ac;
         ar_hex = ar;
@@ -141,21 +141,21 @@ $(function() {
 
     function printROM(){
         txt="";
-        
+
         for (var i=0; i<4; i++){
             rom_offset=i*6;
-            code = rom[rom_offset+4]*2+rom[rom_offset+5];
-            data = rom[rom_offset]*8+rom[rom_offset+1]*4+rom[rom_offset+2]*2+rom[rom_offset+3];
+            code = rom[rom_offset]*2+rom[rom_offset+1];
+            data = rom[rom_offset+5]*8+rom[rom_offset+4]*4+rom[rom_offset+3]*2+rom[rom_offset+2];
             switch (code) {
                 case 0:
                     txt += "LOAD "+data;
                     break;
                 case 1:
                     txt += "ADD "+data;
-                    break;            
+                    break;
                 case 2:
                     txt += "LSL";
-                    break;            
+                    break;
                 case 3:
                     txt += "JMP "+data;
                     break;
@@ -172,12 +172,10 @@ $(function() {
         //02 = Add
         //03 = lsl
         //04 = jmp
-        
-        //0-3 = data
-        //4-5 = code
+
         var rom_offset = pc*6;
-        cr = rom[rom_offset+4]*2+rom[rom_offset+5];
-        ar = rom[rom_offset]*8+rom[rom_offset+1]*4+rom[rom_offset+2]*2+rom[rom_offset+3];
+        cr =  rom[rom_offset]*2+rom[rom_offset+1];
+        ar = rom[rom_offset+5]*8+rom[rom_offset+4]*4+rom[rom_offset+3]*2+rom[rom_offset+2];
         cr = cr%4;
         ar = ar%16;
         console.log("Code "+cr+" Data "+ar);
@@ -186,11 +184,11 @@ $(function() {
                 ac = ar;
                 break;
             case 1:
-                ac = ac + ar
-                break;            
+                ac = ac + ar;
+                break;
             case 2:
                 ac = ac << 1;
-                break;            
+                break;
             case 3:
                 pc = ar-1;
                 break;
