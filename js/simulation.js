@@ -160,7 +160,7 @@ $(function() {
                     txt += "JMP "+data;
                     break;
             }
-            txt+="\n"
+            txt+="\n";
         }
 
         $("#log").val(txt);
